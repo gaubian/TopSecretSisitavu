@@ -7,7 +7,7 @@ def IdealTimeCars(D, N, M, nbCars, bonusPoint, real_streets, paths, streets_name
     duration = 0
     for j in path:
       duration += streets_name[2]
-    IdealTimes.append(duration)
+    IdealTimes.append((duration, bonusPoint + (D - duration))
   return IdealTimes
 
 
