@@ -14,7 +14,7 @@ def idealTimeCars(D, N, M, nbCars, bonusPoint, real_streets, paths, streets_name
   IdealTimes = []
   for i, path in enumerate(paths):
     duration = 0
-    for j in path:
+    for j in path[1:]:
       duration += streets_name[j][2]
     if duration <= D:
       score = bonusPoint + (D - duration)
@@ -24,8 +24,6 @@ def idealTimeCars(D, N, M, nbCars, bonusPoint, real_streets, paths, streets_name
   IdealTimes.sort(key=lambda x : -x[2])
   return IdealTimes
 
-
-
 def idealScore(ideal_times):
   summed = 0
   for _, _, score in ideal_times:
@@ -33,9 +31,11 @@ def idealScore(ideal_times):
   return summed
 
 
-
-
-
 ideal_times = idealTimeCars(D, N, M, nbCars, bonusPoint, real_streets, paths, streets_name)
 print(ideal_times)
 print(idealScore(ideal_times))
+
+""" def visitedStreets(M, nbList, cars_list, streets_name):
+  for i in range(nbList)
+
+ """
