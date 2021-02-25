@@ -19,5 +19,14 @@ def parse():
         if x[2] in taken_streets:
             real_streets.append(x)
     return D, N, M, nbCars, bonusPoint, real_streets, paths
+    # D = duration
+    # N = nb vertices
+    # M = nb arcs
+    # nbcars = nb cars
+    # bonus point
+    # real_streets = streets same order
+    # paths
+
+
 
 print(parse())
