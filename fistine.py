@@ -27,6 +27,10 @@ def parse():
     # real_streets = streets same order
     # paths
 
+def to_graph(N,M,real_streets):
+    tab 
 
+def simple_solve(D,N,M,nbCars,bonusPoint,real_streets,paths):
+    
 
 print(parse())
