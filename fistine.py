@@ -5,13 +5,19 @@ def parse():
         [B,E,name,L] = input().split()
         streets.append((int(B),int(E),name,int(L)))
     paths = []
+    taken_streets = set()
     for _ in range(nbCars):
         prse = input().split()
         P = int(prse[0])
         path = []
         for i in range(P):
             path.append(prse[1+i])
+            taken_streets.add(prse[i+1])
         paths.append(path)
-    return D, N, M, nbCars, bonusPoint, streets, paths
+    real_streets = []
+    for x in streets :
+        if x[2] in taken_streets:
+            real_streets.append(x)
+    return D, N, M, nbCars, bonusPoint, real_streets, paths
 
 print(parse())
