@@ -348,9 +348,12 @@ signed main() {
         }
         paths.push_back(tab);
     }
-    
+    /*cout << "digraph G {\n";
+    for(auto t : edges) cout << get<0>(t) << " -> " << get<1>(t) << ";\n";
+    cout << "}";
+    */
     // can_arrive
-    vector<LL> score(C);
+    vector<LL> score(C,0);
     for(LL i = 0; i < C; ++i) {
         LL sum = 0;
         vector<string> path_i = paths[i];
@@ -358,18 +361,28 @@ signed main() {
             string s = path_i[j];
             LL b = s_to_p[s].first;
             LL e = s_to_p[s].second;
-            sum += G[b][e];
+            sum += G[b][e] + 1;
         }
         if(sum > D) score[i] = 0;
-        else score[i] = 2000LL/sum;
+        else score[i] = 1050LL/sum;
         //else score[i] = D - sum;
     }
 
     // proportional
     map<string,LL> nb_cars_in;
     for(LL i = 0; i < C; ++i) {
-        for(string s : paths[i]) nb_cars_in[s] += score[i];
+        for(int j = 0; j < paths[i].size() - 1; ++j) {
+            string s = paths[i][j];
+            nb_cars_in[s] += score[i];
+        }
     }
+
+    map<string,LL> sum_start;
+    for(LL i = 0; i < C; ++i) {
+        for(LL j = 0; j < paths[i].size(); ++j)
+            sum_start[paths[i][0]] += (score[i] / (1 << j));
+    }
+
     cout << N << '\n';
     for(LL i = 0; i < N; ++i) {
         LL sum = 0;
@@ -378,12 +391,12 @@ signed main() {
             string s_name = p_to_s[mp(in_n,i)];   
             sum += nb_cars_in[s_name];
         }
-        vector<pair<string,LL>> ans;
+        vector<tuple<LL,string,LL>> ans;
         for(auto p_in_n : revG[i]) {
             LL in_n = p_in_n.first;
             string s_name = p_to_s[mp(in_n,i)];
             LL x = rule(nb_cars_in[s_name],sum,D);
-            if(x > 0) ans.push_back(mp(s_name,x)); 
+            if(x > 0) ans.push_back(mt(-sum_start[s_name],s_name,x)); 
         }
         //ans = div_gcd(ans);
         if(ans.size() == 0) {
@@ -392,10 +405,11 @@ signed main() {
                 j = p_in_n.first;
                 break;
             }
-            ans.push_back(mp(p_to_s[mp(j,i)],1));
+            string s = p_to_s[mp(j,i)];
+            ans.push_back(mt(-sum_start[s],s,1));
         }
+        sort(all(ans));
         cout << i << '\n' << ans.size() << '\n';
-        for(auto p : ans) cout << p.first << ' ' << p.second << '\n';
+        for(auto p : ans) cout << get<1>(p) << ' ' << get<2>(p) << '\n';
     }
-    
 }
