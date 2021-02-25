@@ -35,7 +35,12 @@ ideal_times = idealTimeCars(D, N, M, nbCars, bonusPoint, real_streets, paths, st
 print(ideal_times)
 print(idealScore(ideal_times))
 
-""" def visitedStreets(M, nbList, cars_list, streets_name):
-  for i in range(nbList)
+def visitedStreets(M, nbList, cars_list, streets_name, paths):
+  visited_streets = {}
+  for car in cars_list:
+    for street in paths[car[0]][1:]:
+      visited_streets[street] = visited_streets.get(street, 0) + 1
+  return visited_streets
 
- """
+print(visitedStreets(M, nbCars, ideal_times, streets_name, paths))
+
