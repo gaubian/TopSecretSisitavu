@@ -45,10 +45,13 @@ def visitedStreets(M, nbList, cars_list, streets_name, paths):
       visited_streets[street] = visited_streets.get(street, 0) + 1
   return visited_streets
 
+
 visited_streets = visitedStreets(M, nbCars, ideal_times, streets_name, paths)
 visited_streets_list = []
 for key, item in visited_streets.items():
   visited_streets_list.append((key, item))
 visited_streets_list.sort(key= lambda x: -x[1])
 print(visited_streets_list)
+
+
 
